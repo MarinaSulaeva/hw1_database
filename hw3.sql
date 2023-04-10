@@ -1,0 +1,15 @@
+ALTER TABLE employees1 ADD city_id INT NOT NULL DEFAULT 1;
+CREATE TABLE city (city_id INT NOT NULL PRIMARY KEY, city_name VARCHAR(60) NOT NULL);
+INSERT INTO city (city_id, city_name) VALUES (1, 'Москва'), (2, 'Санкт_петербург'), (3, 'Екатеринбург'), (4, 'Томск'), (5, 'Краснодар');
+ALTER TABLE employees1 ADD FOREIGN KEY (city_id) REFERENCES city(city_id);
+UPDATE employees1 SET city_id=1 WHERE id=1;
+UPDATE employees1 SET city_id=2 WHERE id=2;
+UPDATE employees1 SET city_id=4 WHERE id=6;
+UPDATE employees1 SET city_id=5 WHERE id=4;
+UPDATE employees1 SET city_id=3 WHERE id=4;
+SELECT first_name, last_name, city.city_name FROM employees1 JOIN city ON employees1.city_id=city.city_id;
+INSERT INTO city (city_id, city_name) VALUES (6, 'Новосибирск');
+SELECT first_name, last_name, city.city_name FROM city LEFT JOIN employees1 ON city.city_id = employees1.city_id;
+SELECT first_name, city.city_name FROM employees1 FULL JOIN city ON employees1.city_id=city.city_id;
+SELECT first_name, city.city_name FROM city RIGHT JOIN employees1 ON city.city_id = employees1.city_id;
+SELECT city.city_name FROM city LEFT JOIN employees1 ON city.city_id = employees1.city_id WHERE employees1.city_id IS NULL;
